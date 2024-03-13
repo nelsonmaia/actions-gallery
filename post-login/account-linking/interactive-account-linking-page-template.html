@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+
+<head> {%- auth0:head -%}
+  <script>    function showWidget() { document.getElementById("auth0widgetor").style.display = "block"; if(document.getElementById("lcadiv")) document.getElementById("lcadiv").style.display = "none"; }</script>
+
+  {% if transaction.params.ext-lac == 'true' %} 
+<style>
+    .auth0widgetor{
+      display: none;
+    }
+
+    #lcadiv{
+        background-color: white;
+    }
+</style>
+{% endif %}
+</head>
+
+<body> 
+  {% if transaction.params.ext-lac == 'true' %} 
+      <div id="lcadiv">
+        It looks like you have another account with the same email address. We recommend you link these accounts. You may sign in again to link accounts.
+        <a onclick="window.location.href='https://https://auth.nmm-actions.identityready.io/continue'">I want to skip this and create a new account.(Not recommended)</a>
+        
+        <button onclick="showWidget()">Continue</button> </div>
+      {% endif %}
+  <div class="auth0widgetor" id="auth0widgetor"> 
+    {%- auth0:widget -%} 
+  </div>
+</body>
+
+</html>

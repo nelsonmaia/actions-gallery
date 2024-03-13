@@ -22,6 +22,15 @@
  *  - axios@1.6.2
  *  - jsonwebtoken@9.0.2
  *  - auth0@4.1.0
+ *  - jwks-rsa@3.1.0
+ * 
+ * Action Secrets 
+ *  - domain: Auth0 tenant domain (optional)
+ *  - connection: Database Connection with the Username and Password
+ *  - madomain: Domain / Audience used for Management API - If using custom domain, set this to the canonical domain of the tenant
+ *  - clientSecret: Client Secret for Management API call
+ *  - clientId: Client ID for Management API call
+ *  - lac: Set as true if you wanna to send an extra parameter to the Login Page to include Confirmation Message. Sample Custom Page Template here: 
  */
 const interactive_login = new RegExp('^oidc-');
 const database_sub = new RegExp('^auth0|');
@@ -47,6 +56,7 @@ async function exchangeAndVerify(api, domain, client_id, redirect_uri, code, non
             },
             timeout: 5000 // 5 sec
         });
+
 
     //console.log(`id_token: ${id_token}`);
 
@@ -113,8 +123,10 @@ async function linkAndMakePrimary(event, api, primary_sub) {
 
         const cc = new AuthenticationClient({domain, clientId, clientSecret});
 
+        let audienceDomain = event?.secrets?.madomain || domain;
+
         try {
-            const {data} = await cc.oauth.clientCredentialsGrant({audience: `https://${domain}/api/v2/`});
+            const {data} = await cc.oauth.clientCredentialsGrant({audience: `https://${audienceDomain}/api/v2/`});
 
             token = data?.access_token;
 
@@ -135,7 +147,7 @@ async function linkAndMakePrimary(event, api, primary_sub) {
         }
     }
 
-    //console.log(`m2m token: ${token}`);
+    // console.log(`m2m token: ${token}`);
 
     const client = new ManagementClient({domain, token});
 
@@ -186,22 +198,32 @@ exports.onExecutePostLogin = async (event, api) => {
 
     const domain = event?.secrets?.domain || event.request?.hostname;
 
+    const connection = event?.secrets?.connection;
+
     const authClient = new auth0.Authentication({domain, clientID: event.client.client_id});
 
     const nonce = event.transaction.id;
     console.log(`nonce for inner tx: ${nonce}`);
 
-    const nestedAuthorizeURL = authClient.buildAuthorizeUrl({
+    let authorizeParams = {
         redirectUri: `https://${domain}/continue`,
         nonce,
         responseType: 'code',
         prompt: 'login',
-        connection: 'Users',
+        connection: `${connection}`,
         login_hint: event.user.email,
         scope: 'openid profile email',
         //responseMode: 'form_post' // Auth0 wants `state` in query parameter, hence we can't do form_post :(
         // TODO: PKCE
-    });
+    };
+
+    const confirmLinkingAccount = event?.secrets?.lac || false;
+
+    if(confirmLinkingAccount){
+        authorizeParams['ext-lac'] = 'true';
+    }
+
+    const nestedAuthorizeURL = authClient.buildAuthorizeUrl();
 
     console.log(`redirecting to ${nestedAuthorizeURL}`);
 
