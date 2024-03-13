@@ -17,7 +17,7 @@ Account linking is essential for services that allow users to sign in using mult
 4. **Account Linking**: If the user confirms the action, the accounts are linked as requested. If the user cancels, the process halts, and no changes are made.
 
 ## Prerequisites
-- [Auth0 Page Templates](https://auth0.com/docs/universal-login/page-templates): Ensure you have the necessary templates (/.interactive-account-linking-page-template.html) configured in your Auth0 Dashboard to customize the confirmation screen as per your requirements. 
+- [Auth0 Page Templates](https://auth0.com/docs/universal-login/page-templates): Ensure you have the necessary [templates](/.interactive-account-linking-page-template.html) configured in your Auth0 Dashboard to customize the confirmation screen as per your requirements. 
 - Have a Custom Domain Configured
 
 ## Installation
