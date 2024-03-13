@@ -21,7 +21,7 @@ Account linking is essential for services that allow users to sign in using mult
 - Have a Custom Domain Configured
 
 ## Installation
-1. **Copy Action Code**: Copy the provided JavaScript code for this Action.
+1. **Copy Action Code**: Copy the provided [JavaScript code](interactive-account-linking.js) for this Action.
 2. **Paste into Auth0 Dashboard**: Create a new Post Login Action and paste the code
 3. **Create Secrets and Import NPM Packages**: Make sure to follow the instructions inside the action to create NPM Packages and needed Actions Secrets
 4. **Save Changes**: Save the changes made to the Action.
