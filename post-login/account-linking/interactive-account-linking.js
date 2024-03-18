@@ -2,7 +2,8 @@
 
 /**
  * Author: Amin Abbaspour
- * Date: 2023-11-22
+ * Contributed by: Nelson Matias
+ * Date: 2024-03-13
  * License: MIT (https://github.com/auth0/actions-gallery/blob/main/LICENSE)
  *
  * Generic Action showing how to perform a nested authorisation transaction.
