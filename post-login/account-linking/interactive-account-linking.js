@@ -31,7 +31,7 @@
  *  - madomain: Domain / Audience used for Management API - If using custom domain, set this to the canonical domain of the tenant
  *  - clientSecret: Client Secret for Management API call
  *  - clientId: Client ID for Management API call
- *  - lac: Set as true if you wanna to send an extra parameter to the Login Page to include Confirmation Message. Sample Custom Page Template here: 
+ *  - lac: Set as true if you wanna to send an extra parameter to the Login Page to include Confirmation Message. Sample Custom Page Template available on interactive-account-linking-page-template.html  
  */
 const interactive_login = new RegExp('^oidc-');
 const database_sub = new RegExp('^auth0|');

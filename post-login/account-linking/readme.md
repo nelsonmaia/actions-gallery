@@ -28,8 +28,9 @@ Account linking is essential for services that allow users to sign in using mult
 5. **Configure Triggers**: Add the action to the Post Login flow
 
 ## Configuration
-- Ensure that you have configured the necessary Page Templates in your Auth0 Dashboard, particularly for the confirmation screen, to provide a seamless user experience.
+- Ensure that you have configured the necessary [Page Template](interactive-account-linking-page-template.html) in your Auth0, particularly for the confirmation screen, to provide a seamless user experience.
 - Customize any messages or UI elements within the provided JavaScript code to match your application's branding and user expectations.
+- You recommed using [Auth0 CLI](https://auth0.github.io/auth0-cli/auth0_universal-login_customize.html) for the Page Template Configurations
 
 ## Usage
 1. When a user attempts to link their account, the Action will be triggered.
